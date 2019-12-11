@@ -82,3 +82,19 @@ def evaluate_model(model, x_test, y_test):
 
     _, acc = model.evaluate(x_test, y_test, verbose=0)
     print('> %.3f' % (acc * 100.0))
+
+
+
+def linear_svm(c, x_train, y_train, x_test, y_test):
+    
+    clf = svm.SVC(probability=False, kernel='linear', C=c)
+    clf.fit(x_train, y_train)
+
+
+    # accuracy on training set
+    train_score = clf.score(x_train, y_train)
+
+    # accuracy on testing set
+    test_score = clf.score(x_test, y_test)
+
+    return train_score, test_score
