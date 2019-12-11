@@ -6,15 +6,15 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 
 import tensorflow
-print("Num GPUs Available: ", len(tensorflow.config.experimental.list_physical_devices('GPU')))
+#print("Num GPUs Available: ", len(tensorflow.config.experimental.list_physical_devices('GPU')))
+from keras.utils import to_categorical
+from keras.preprocessing.image import ImageDataGenerator
 
-from tensorflow.keras.utils import to_categorical
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
-
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Dropout, Activation, Flatten
-from tensorflow.keras.layers import Conv2D, MaxPooling2D, SpatialDropout2D
-from tensorflow.keras.optimizers import SGD
+from sklearn import svm
+from keras.models import Sequential
+from keras.layers import Dense, Dropout, Activation, Flatten
+from keras.layers import Conv2D, MaxPooling2D, SpatialDropout2D
+from keras.optimizers import SGD
 
 tensorflow.set_random_seed(123)
 np.random.seed(123)
