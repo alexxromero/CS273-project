@@ -98,3 +98,59 @@ def linear_svm(c, x_train, y_train, x_test, y_test):
     test_score = clf.score(x_test, y_test)
 
     return train_score, test_score
+
+
+def polynomial_svm(c, x_train, y_train, x_test, y_test):
+    clf = svm.SVC(probability=False, kernel='poly', C=c)
+    clf.fit(x_train, y_train)
+    
+    # accuracy on training set
+    train_score = clf.score(x_train, y_train)
+    
+    # accuracy on testing set 
+    test_score = clf.score(x_test, y_test)
+
+    return train_score, test_score
+
+
+from keras.callbacks import EarlyStopping
+
+
+def define_model(name, lr):
+    # define architecture
+
+    if (name == "relu"):
+
+      model = Sequential()
+      model.add(Conv2D(32, (3, 3), padding='same', activation='relu',
+                       kernel_initializer='he_uniform',
+                       input_shape=[32,32,3]))
+      model.add(Conv2D(32, (3, 3), padding='same', activation='relu',
+                      kernel_initializer='he_uniform'))
+      model.add(MaxPooling2D(pool_size=(2, 2)))
+      model.add(Flatten())
+      model.add(Dense(128, activation='relu', kernel_initializer='he_uniform'))
+      model.add(Dense(10, activation='softmax'))
+      # compile the model 
+      opt = SGD(lr=lr, momentum=0.9)
+      model.compile(optimizer=opt, loss='categorical_crossentropy', metrics=['accuracy'])
+
+    elif (name == "log"):
+    
+      model = Sequential()
+      model.add(Conv2D(32, (3, 3), padding='same', activation='sigmoid',
+                       kernel_initializer='he_uniform',
+                       input_shape=[32,32,3]))
+      model.add(Conv2D(32, (3, 3), padding='same', activation='sigmoid',
+                      kernel_initializer='he_uniform'))
+      model.add(MaxPooling2D(pool_size=(2, 2)))
+      model.add(Flatten())
+      model.add(Dense(128, activation='sigmoid', kernel_initializer='he_uniform'))
+      model.add(Dense(10, activation='softmax'))
+      # compile the model 
+      opt = SGD(lr=lr, momentum=0.9)
+      model.compile(optimizer=opt, loss='categorical_crossentropy', metrics=['accuracy'])
+
+    return model
+
+
